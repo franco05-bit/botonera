@@ -1,168 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Botonera de Sonidos</title>
+  <meta charset="UTF-8">
+  <title>Botonera de Sonidos</title>
 
-<style>
-body {
-  background-color: #112b5d;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 140px 120px;
-}
+  <style>
+    body {
+      background-color: #112b5d;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 140px 40px;
+      overflow-x: hidden;
+    }
 
-h1 {
-  margin-bottom: 160px;
-}
+    h1 {
+      margin-bottom: 60px;
+    }
 
-.botonera {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
+    /* BOTONERA */
+    .botonera {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
 
-button {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  background: radial-gradient(circle at 30% 30%, #af4c4c, #5e1b1b);
-  box-shadow:
-    inset -4px -4px 10px rgba(255,255,255,0.2),
-    inset 4px 4px 10px rgba(0,0,0,0.5),
-    0 6px 0 #3d0f0f;
-  cursor: pointer;
-}
+    button {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      background: radial-gradient(circle at 30% 30%, #af4c4c, #5e1b1b);
+      box-shadow:
+        inset -4px -4px 10px rgba(255,255,255,0.2),
+        inset 4px 4px 10px rgba(0,0,0,0.5),
+        0 6px 0 #3d0f0f;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
 
-button:active {
-  transform: translateY(4px);
-}
+    button:active,
+    button.activo {
+      transform: translateY(4px);
+      box-shadow:
+        inset -2px -2px 6px rgba(255,255,255,0.1),
+        inset 2px 2px 6px rgba(0,0,0,0.6),
+        0 2px 0 #3d0f0f;
+    }
 
-/* Nieve */
-.nieve {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 20;
-  opacity: 0.8;
-}
+    /* LUCES */
+    .luces-navidad {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 10;
+      animation: parpadeo 1.5s infinite;
+    }
 
-/* Luces */
-@keyframes parpadeo {
-  0% { opacity: 1; }
-  50% { opacity: 0.6; }
-  100% { opacity: 1; }
-}
+    @keyframes parpadeo {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
 
-.luces-navidad {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 30;
-  pointer-events: none;
-  animation: parpadeo 1.5s infinite;
-}
+    /* NIEVE */
+    .nieve {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.8;
+    }
 
-/* Anuncio viejo */
-.anuncio {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 260px;
-  background: white;
-  color: black;
-  border: 4px solid red;
-  padding: 10px;
-  z-index: 999;
-}
+    /* ANUNCIO */
+    .anuncio {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #f4f4f4;
+      color: black;
+      border: 4px solid red;
+      padding: 20px;
+      width: 280px;
+      z-index: 100;
+      box-shadow: 0 0 20px black;
+      display: none;
+    }
 
-.anuncio img {
-  width: 100%;
-}
+    .anuncio img {
+      width: 100%;
+      margin-top: 10px;
+    }
 
-.cerrar {
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    .cerrar {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.oculto {
-  display: none;
-}
-</style>
+    footer {
+      margin-top: 60px;
+      opacity: 0.6;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-<img src="img/luces.png" class="luces-navidad">
-<img src="img/nieve.gif" class="nieve">
+  <!-- DESBLOQUEO DE AUDIO -->
+  <p style="opacity:0.5">Hacé un click para activar el sonido</p>
 
-<h1>Botonera</h1>
+  <!-- LUCES -->
+  <img src="img/luces.png" class="luces-navidad">
 
-<div class="botonera">
-  <button onclick="playSound('sonido1')">1</button>
-  <button onclick="playSound('sonido2')">2</button>
-  <button onclick="playSound('sonido3')">3</button>
-  <button onclick="playSound('sonido4')">4</button>
-  <button onclick="playSound('sonido5')">5</button>
-  <button onclick="playSound('sonido6')">6</button>
-  <button onclick="playSound('sonido7')">7</button>
-  <button onclick="playSound('sonido8')">8</button>
-  <button onclick="playSound('sonido9')">9</button>
-  <button onclick="playSound('sonido10')">10</button>
-</div>
+  <!-- NIEVE -->
+  <img src="img/nieve.gif" class="nieve">
 
-<audio id="clickSound" src="sonidos/click.mp3"></audio>
-<audio id="sonido1" src="sonidos/sonido1.mp3"></audio>
-<audio id="sonido2" src="sonidos/sonido2.mp3"></audio>
-<audio id="sonido3" src="sonidos/sonido3.mp3"></audio>
-<audio id="sonido4" src="sonidos/sonido4.mp3"></audio>
-<audio id="sonido5" src="sonidos/sonido5.mp3"></audio>
-<audio id="sonido6" src="sonidos/sonido6.mp3"></audio>
-<audio id="sonido7" src="sonidos/sonido7.mp3"></audio>
-<audio id="sonido8" src="sonidos/sonido8.mp3"></audio>
-<audio id="sonido9" src="sonidos/sonido9.mp3"></audio>
-<audio id="sonido10" src="sonidos/sonido10.mp3"></audio>
+  <h1>Botonera</h1>
 
-<div id="anuncio" class="anuncio oculto">
-  <span class="cerrar" onclick="cerrarAnuncio()">✖</span>
-  <h3>⚠ Atención</h3>
-  <p>Tu PC está infectada con un virus peligroso</p>
-  <img src="img/anuncio.jpg">
-</div>
+  <div class="botonera">
+    <button data-sound="sonido1">1</button>
+    <button data-sound="sonido2">2</button>
+    <button data-sound="sonido3">3</button>
+    <button data-sound="sonido4">4</button>
+    <button data-sound="sonido5">5</button>
+    <button data-sound="sonido6">6</button>
+    <button data-sound="sonido7">7</button>
+    <button data-sound="sonido8">8</button>
+    <button data-sound="sonido9">9</button>
+    <button data-sound="sonido10">0</button>
+  </div>
 
-<script>
-function playSound(id) {
-  const sound = document.getElementById(id);
-  const click = document.getElementById("clickSound");
-  if (!sound) return;
-  sound.currentTime = 0;
-  sound.play();
-  click.currentTime = 0;
-  click.play();
-}
+  <footer>Hecho por Franco</footer>
 
-function cerrarAnuncio() {
-  document.getElementById("anuncio").classList.add("oculto");
-}
+  <!-- ANUNCIO -->
+  <div id="anuncio" class="anuncio">
+    <span class="cerrar" onclick="cerrarAnuncio()">✖</span>
+    <h3>⚠ Advertencia</h3>
+    <p>Tu PC está en riesgo</p>
+    <img src="img/anuncio.jpg">
+  </div>
 
-setTimeout(() => {
-  document.getElementById("anuncio").classList.remove("oculto");
-}, 5000);
-</script>
+  <!-- AUDIOS -->
+  <audio id="clickSound" src="sonidos/click.mp3"></audio>
+  <audio id="sonido1" src="sonidos/sonido1.mp3"></audio>
+  <audio id="sonido2" src="sonidos/sonido2.mp3"></audio>
+  <audio id="sonido3" src="sonidos/sonido3.mp3"></audio>
+  <audio id="sonido4" src="sonidos/sonido4.mp3"></audio>
+  <audio id="sonido5" src="sonidos/sonido5.mp3"></audio>
+  <audio id="sonido6" src="sonidos/sonido6.mp3"></audio>
+  <audio id="sonido7" src="sonidos/sonido7.mp3"></audio>
+  <audio id="sonido8" src="sonidos/sonido8.mp3"></audio>
+  <audio id="sonido9" src="sonidos/sonido9.mp3"></audio>
+  <audio id="sonido10" src="sonidos/sonido10.mp3"></audio>
+
+  <script>
+    /* DESBLOQUEO AUDIO */
+    document.body.addEventListener("click", () => {
+      document.querySelectorAll("audio").forEach(a => {
+        a.volume = 1;
+        a.play().catch(()=>{});
+        a.pause();
+        a.currentTime = 0;
+      });
+    }, { once: true });
+
+    function playSound(id) {
+      const sound = document.getElementById(id);
+      const click = document.getElementById("clickSound");
+      if (!sound) return;
+
+      sound.currentTime = 0;
+      sound.play();
+
+      if (click) {
+        click.currentTime = 0;
+        click.play();
+      }
+    }
+
+    /* CLICK BOTONES */
+    document.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        playSound(btn.dataset.sound);
+      });
+    });
+
+    /* TECLADO */
+    document.addEventListener("keydown", e => {
+      const mapa = {
+        "1":"sonido1","2":"sonido2","3":"sonido3","4":"sonido4",
+        "5":"sonido5","6":"sonido6","7":"sonido7","8":"sonido8",
+        "9":"sonido9","0":"sonido10"
+      };
+
+      const sonido = mapa[e.key];
+      if (sonido) {
+        playSound(sonido);
+        const btn = document.querySelector(`[data-sound="${sonido}"]`);
+        btn.classList.add("activo");
+        setTimeout(() => btn.classList.remove("activo"), 100);
+      }
+    });
+
+    /* ANUNCIO ALEATORIO */
+    setTimeout(() => {
+      document.getElementById("anuncio").style.display = "block";
+    }, 8000);
+
+    function cerrarAnuncio() {
+      document.getElementById("anuncio").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
-
